@@ -6,7 +6,23 @@ ctx = ssl.create_default_context()
 ctx.check_hostname=False
 ctx.verify_mode=ssl.CERT_NONE
 
-url = 'https://myanimelist.net/topanime.php?type=upcoming'
+list1 = ['airing','upcoming','tv','movie','ova','ona','special','bypopularity','favorite']
+url = 'https://myanimelist.net/topanime.php'
+xz = 'a'
+
+def inputFunc():
+    global url
+    xz = input('Enter the category you want: ')
+    xz = xz.lower()
+    if(xz=='all anime'):
+        url=url
+    elif(list1.count(xz)==1):
+        url += '?type='+xz
+    else:
+        print("Incorrect parameter")
+        inputFunc()
+
+inputFunc()
 html = urllib.request.urlopen(url,context=ctx).read()
 soup = BeautifulSoup(html,'html.parser')
 
